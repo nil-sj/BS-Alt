@@ -98,4 +98,3 @@ public class Review {
         this.updatedDate = LocalDateTime.now();
     }
 }
-

@@ -27,6 +27,9 @@ public class User {
     @Column(columnDefinition = "TEXT")
     private String bio;
 
+    @Column
+    private String profilePhotoUrl;  // Profile photo URL field
+
     // Many-to-Many relationship for books in reading progress
     @ManyToMany
     @JoinTable(
@@ -52,6 +55,10 @@ public class User {
     // A user can have many reading progresses
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ReadingProgress> readingProgresses;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRole role;  // New field for user role
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -101,6 +108,14 @@ public class User {
         this.bio = bio;
     }
 
+    public String getProfilePhotoUrl() {
+        return profilePhotoUrl;
+    }
+
+    public void setProfilePhotoUrl(String profilePhotoUrl) {
+        this.profilePhotoUrl = profilePhotoUrl;
+    }
+
     public Set<Book> getBooks() {
         return books;
     }
@@ -115,6 +130,30 @@ public class User {
 
     public void setWishlistBooks(Set<Book> wishlistBooks) {
         this.wishlistBooks = wishlistBooks;
+    }
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public Set<ReadingProgress> getReadingProgresses() {
+        return readingProgresses;
+    }
+
+    public void setReadingProgresses(Set<ReadingProgress> readingProgresses) {
+        this.readingProgresses = readingProgresses;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
     public LocalDateTime getCreatedAt() {
