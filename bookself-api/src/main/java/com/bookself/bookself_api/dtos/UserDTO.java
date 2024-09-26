@@ -7,6 +7,7 @@ public class UserDTO {
     private String bio;
     private String profilePhotoUrl;
     private String role;
+    private String password;  // Added password field for registration and login
 
     // Getters and Setters
     public Long getId() {
@@ -55,5 +56,13 @@ public class UserDTO {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
