@@ -27,32 +27,29 @@ public class User {
     @Column(columnDefinition = "TEXT")
     private String bio;
 
-    private String photoPath;
+    // Many-to-Many relationship for books in reading progress
+    @ManyToMany
+    @JoinTable(
+            name = "user_books",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+    private Set<Book> books;  // Books in reading progress
 
-    // Enum to represent roles like USER, ADMIN, etc.
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "role")
-    private Set<String> roles;
-
-    // WishlistBooks could be many-to-many relation to books
+    // Many-to-Many relationship for books added to the wishlist
     @ManyToMany
     @JoinTable(
             name = "user_wishlist_books",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    private Set<Book> wishlistBooks;
+    private Set<Book> wishlistBooks;  // Books in the wishlist
 
-    @Column(nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
-    private LocalDateTime lastLoginAt;
 
     // Getters and Setters
 
@@ -96,20 +93,12 @@ public class User {
         this.bio = bio;
     }
 
-    public String getPhotoPath() {
-        return photoPath;
+    public Set<Book> getBooks() {
+        return books;
     }
 
-    public void setPhotoPath(String photoPath) {
-        this.photoPath = photoPath;
-    }
-
-    public Set<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<String> roles) {
-        this.roles = roles;
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 
     public Set<Book> getWishlistBooks() {
@@ -134,13 +123,5 @@ public class User {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public LocalDateTime getLastLoginAt() {
-        return lastLoginAt;
-    }
-
-    public void setLastLoginAt(LocalDateTime lastLoginAt) {
-        this.lastLoginAt = lastLoginAt;
     }
 }
