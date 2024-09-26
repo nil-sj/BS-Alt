@@ -41,6 +41,14 @@ public class Book {
     )
     private Set<Genre> genres;
 
+    // A book can have multiple reviews
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Review> reviews;
+
+    // A book can have many reading progresses
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ReadingProgress> readingProgresses;
+
     @ManyToOne
     @JoinColumn(name = "added_by_user_id", nullable = false)
     private User addedBy;

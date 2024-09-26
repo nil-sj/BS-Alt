@@ -45,6 +45,14 @@ public class User {
     )
     private Set<Book> wishlistBooks;  // Books in the wishlist
 
+    // A user can have multiple reviews
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Review> reviews;
+
+    // A user can have many reading progresses
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ReadingProgress> readingProgresses;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
